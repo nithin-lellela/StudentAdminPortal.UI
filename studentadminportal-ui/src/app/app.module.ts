@@ -50,6 +50,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { ViewStudentComponent } from './students/view-student/view-student.component';
 
 
 
@@ -57,7 +58,8 @@ import { MatTableModule } from '@angular/material/table';
   declarations: [
     AppComponent,
     TopNavComponent,
-    StudentsComponent
+    StudentsComponent,
+    ViewStudentComponent
   ],
   imports: [
     FormsModule,

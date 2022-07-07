@@ -18,13 +18,13 @@ export class StudentsComponent implements OnInit {
   students: Student[] = [];
 
   displayColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email', 'mobile',
-  'gender'];
+  'gender', 'edit'];
 
   dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>();
 
   filterString = '';
 
-  constructor(private studentService: StudentService) { }
+  constructor(private readonly studentService: StudentService) { }
 
   filterStudents(){
    this.dataSource.filter = this.filterString.trim().toLocaleLowerCase();
