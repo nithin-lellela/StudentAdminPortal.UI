@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentService } from '../student.service';
 import { Student } from 'src/app/models/ui-models/student.model';
+import { GenderService } from 'src/app/services/gender.service';
+import { Gender } from 'src/app/models/ui-models/gender.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-student',
@@ -11,6 +14,7 @@ import { Student } from 'src/app/models/ui-models/student.model';
 export class ViewStudentComponent implements OnInit {
 
   studentId: string | null | undefined;
+
   student: Student = {
     id: '',
     firstName: '',
@@ -31,7 +35,10 @@ export class ViewStudentComponent implements OnInit {
     }
   }
 
-  constructor(private readonly studentService: StudentService, private readonly route: ActivatedRoute)
+  genderList: Gender [] = [];
+
+  constructor(private readonly studentService: StudentService, private readonly route: ActivatedRoute,
+    private readonly genderService: GenderService, private snackBar: MatSnackBar)
   {
 
   }
@@ -55,10 +62,41 @@ export class ViewStudentComponent implements OnInit {
             }
 
           });
+
+          this.genderService.getGenders().subscribe({
+            next: (successResponse) => {
+              this.genderList = successResponse;
+              //console.log(successResponse);
+            },
+            error: (errorResponse) => {
+              console.log(errorResponse);
+            },
+            complete: () => {
+
+            }
+          });
         }
       }
     );
 
+  }
+
+  onUpdate(): void{
+    // call student service to update the details
+    this.studentService.updateStudent(this.student.id, this.student).subscribe({
+      next: (successResponse) => {
+        this.snackBar.open('Student Updated Successfully', undefined, {
+          duration: 3000
+        });
+        //console.log(successResponse);
+      },
+      error: (errorResponse) => {
+        console.log(errorResponse);
+      },
+      complete: () => {
+
+      }
+    });
   }
 
 }
